@@ -10,11 +10,35 @@ $pin = $_POST["pin"];
 $email = $_POST["email"];
 $pwd = $_POST["pwd"];
 
-if($mysqli->query("INSERT INTO users (fname, lname, address, city, pin, email, password) VALUES('$fname', '$lname', '$address', '$city', $pin, '$email', '$pwd')")){
-	echo 'Data inserted';
-	echo '<br/>';
+// Input validation: Allow only safe characters for each input field.
+if (!preg_match('/^[A-Za-z\' -]+$/', $fname) ||
+    !preg_match('/^[A-Za-z\' -]+$/', $lname) ||
+    !preg_match('/^[A-Za-z0-9\s\']+$/i', $address) ||
+    !preg_match('/^[A-Za-z\s\']+$/i', $city) ||
+    !ctype_digit($pin) ||
+    !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    die("Invalid input data.");
 }
 
-header ("location:login.php");
+// Hash the password securely before storing it.
+$hashedPwd = password_hash($pwd, PASSWORD_BCRYPT);
 
+// Use prepared statements to prevent SQL injection.
+$stmt = $mysqli->prepare("INSERT INTO users (fname, lname, address, city, pin, email, password) VALUES(?, ?, ?, ?, ?, ?, ?)");
+
+if ($stmt) {
+    $stmt->bind_param("ssssiss", $fname, $lname, $address, $city, $pin, $email, $hashedPwd);
+
+    if ($stmt->execute()) {
+        echo 'Data inserted';
+        echo '<br/>';
+    } else {
+        echo 'Error inserting data.';
+        echo '<br/>';
+    }
+
+    $stmt->close();
+}
+
+header("location:login.php");
 ?>
