@@ -44,5 +44,9 @@ if ($stmt) {
     echo '<br/>';
 }
 
+// Set the CSP and X-Frame-Options headers to protect against Clickjacking
+header("Content-Security-Policy: frame-ancestors 'self';");
+header("X-Frame-Options: DENY;");
+
 header("location:login.php");
 ?>

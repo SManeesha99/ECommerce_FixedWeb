@@ -13,8 +13,12 @@ if(session_id() == '' || !isset($_SESSION)){
     <title>BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-     <!-- Content Security Policy (CSP) Header -->
-     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+    
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; frame-ancestors 'self';">
+
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
 </head>
   <body>
 

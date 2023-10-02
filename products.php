@@ -1,11 +1,11 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-include 'config.php';
+// Start or resume the session
+if(session_id() == '' || !isset($_SESSION)){
+    session_start();
+}
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
@@ -13,6 +13,12 @@ include 'config.php';
     <title>Products || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
+
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; frame-ancestors 'self';">
+
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY">
   </head>
   <body>
 
@@ -56,10 +62,9 @@ include 'config.php';
           $i=0;
           $product_id = array();
           $product_quantity = array();
-
           $result = $mysqli->query('SELECT * FROM products');
           if($result === FALSE){
-            die(mysql_error());
+            die($mysqli->error);
           }
 
           if($result){
@@ -73,8 +78,6 @@ include 'config.php';
               echo '<p><strong>Description</strong>: '.$obj->product_desc.'</p>';
               echo '<p><strong>Units Available</strong>: '.$obj->qty.'</p>';
               echo '<p><strong>Price (Per Unit)</strong>: '.$currency.$obj->price.'</p>';
-
-
 
               if($obj->qty > 0){
                 echo '<p><a href="update-cart.php?action=add&id='.$obj->id.'"><input type="submit" value="Add To Cart" style="clear:both; background: #0078A0; border: none; color: #fff; font-size: 1em; padding: 10px;" /></a></p>';
@@ -98,20 +101,12 @@ include 'config.php';
 
         <div class="row" style="margin-top:10px;">
           <div class="small-12">
-
-
-
-
-        <footer style="margin-top:10px;">
-           <p style="text-align:center; font-size:0.8em;clear:both;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
-        </footer>
-
-      </div>
+            <footer style="margin-top:10px;">
+              <p style="text-align:center; font-size:0.8em;clear:both;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
+            </footer>
+          </div>
+        </div>
     </div>
-
-
-
-
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
