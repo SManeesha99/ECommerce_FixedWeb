@@ -5,21 +5,23 @@ if(session_id() == '' || !isset($_SESSION)){
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
 
-        <!-- Content Security Policy (CSP) Header -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
 
-  </head>
-  <body>
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY"> <!-- or use SAMEORIGIN if required -->
 
+</head>
+<body>
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
@@ -52,21 +54,19 @@ if(session_id() == '' || !isset($_SESSION)){
     </nav>
 
     <div class="row" style="margin-top:30px;">
-      <div class="small-12">
-
+    <div class="small-12">
         <p>Wanna get in touch. Email us at <a href="mailto:support@techbarrack.com">support@techbarrack.com</a></p>
 
         <footer>
-           <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
+            <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
         </footer>
-
-      </div>
     </div>
+</div>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
 </html>

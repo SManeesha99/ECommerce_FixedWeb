@@ -10,14 +10,21 @@ include 'config.php';
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopping Cart || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-  </head>
-  <body>
+
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY"> <!-- or use SAMEORIGIN if required -->
+
+</head>
+<body>
 
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
@@ -51,7 +58,7 @@ include 'config.php';
     </nav>
      
     <div class="row" style="margin-top:10px;">
-    <div class="large-12">
+<div class="large-12">
         <?php
         echo '<p><h3>Your Shopping Cart</h3></p>';
         if(isset($_SESSION['cart'])) {
@@ -105,19 +112,12 @@ include 'config.php';
     <div class="row" style="margin-top:10px;">
       <div class="small-12">
 
-
-
-
         <footer style="margin-top:10px;">
            <p style="text-align:center; font-size:0.8em;clear:both;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
         </footer>
 
       </div>
     </div>
-
-
-
-
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
