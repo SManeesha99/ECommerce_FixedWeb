@@ -1,23 +1,21 @@
 <?php
-
 include 'config.php';
 
-$fname = $_POST["fname"];
-$lname = $_POST["lname"];
-$address = $_POST["address"];
-$city = $_POST["city"];
-$pin = $_POST["pin"];
-$email = $_POST["email"];
+$fname = filter_input(INPUT_POST, 'fname', FILTER_SANITIZE_STRING);
+$lname = filter_input(INPUT_POST, 'lname', FILTER_SANITIZE_STRING);
+$address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+$city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+$pin = filter_input(INPUT_POST, 'pin', FILTER_VALIDATE_INT);
+$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $pwd = $_POST["pwd"];
 
-// Input validation: Allow only safe characters for each input field.
-if (!preg_match('/^[A-Za-z\' -]+$/', $fname) ||
-    !preg_match('/^[A-Za-z\' -]+$/', $lname) ||
-    !preg_match('/^[A-Za-z0-9\s\']+$/i', $address) ||
-    !preg_match('/^[A-Za-z\s\']+$/i', $city) ||
-    !ctype_digit($pin) ||
-    !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("Invalid input data.");
+if (
+    empty($fname) || empty($lname) || empty($address) ||
+    empty($city) || $pin === false || $email === false
+) {
+    // Handle invalid input data gracefully, e.g., redirect to an error page
+    header("location:error.php");
+    exit;
 }
 
 // Hash the password securely before storing it.
@@ -34,14 +32,16 @@ if ($stmt) {
         echo 'Data inserted';
         echo '<br/>';
     } else {
-        echo 'Error inserting data.';
-        echo '<br/>';
+        // Handle database error gracefully, e.g., log the error
+        header("location:error.php");
+        exit;
     }
 
     $stmt->close();
 } else {
-    echo 'Error preparing statement.';
-    echo '<br/>';
+    // Handle statement preparation error gracefully, e.g., log the error
+    header("location:error.php");
+    exit;
 }
 
 // Set the CSP and X-Frame-Options headers to protect against Clickjacking
