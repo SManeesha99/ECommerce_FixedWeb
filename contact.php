@@ -1,8 +1,8 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
+// Start or resume the session
+if(session_id() == '' || !isset($_SESSION)){
+    session_start();
+}
 ?>
 
 <!doctype html>
@@ -13,6 +13,10 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
     <title>Contact || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
+
+        <!-- Content Security Policy (CSP) Header -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+
   </head>
   <body>
 
@@ -47,9 +51,6 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
       </section>
     </nav>
 
-
-
-
     <div class="row" style="margin-top:30px;">
       <div class="small-12">
 
@@ -61,12 +62,6 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
 
       </div>
     </div>
-
-
-
-
-
-
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>

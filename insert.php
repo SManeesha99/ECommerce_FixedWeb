@@ -27,6 +27,7 @@ $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT);
 $stmt = $mysqli->prepare("INSERT INTO users (fname, lname, address, city, pin, email, password) VALUES(?, ?, ?, ?, ?, ?, ?)");
 
 if ($stmt) {
+    // Bind parameters with types.
     $stmt->bind_param("ssssiss", $fname, $lname, $address, $city, $pin, $email, $hashedPwd);
 
     if ($stmt->execute()) {
@@ -38,6 +39,9 @@ if ($stmt) {
     }
 
     $stmt->close();
+} else {
+    echo 'Error preparing statement.';
+    echo '<br/>';
 }
 
 header("location:login.php");

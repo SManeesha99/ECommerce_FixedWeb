@@ -1,44 +1,51 @@
 <?php
 
 //if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
+if (session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
 
 include 'config.php';
 
 $username = $_POST["username"];
 $password = $_POST["pwd"];
 $flag = 'true';
-//$query = $mysqli->query("SELECT email, password from users");
 
-$result = $mysqli->query('SELECT id,email,password,fname,type from users order by id asc');
+// Use a prepared statement to prevent SQL injection.
+$stmt = $mysqli->prepare("SELECT id, email, password, fname, type FROM users WHERE email = ? AND password = ?");
 
-if($result === FALSE){
-  die(mysql_error());
-}
+if ($stmt) {
+    // Bind parameters.
+    $stmt->bind_param("ss", $username, $password);
+    
+    if ($stmt->execute()) {
+        $stmt->store_result();
 
-if($result){
-  while($obj = $result->fetch_object()){
-    if($obj->email === $username && $obj->password === $password) {
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($id, $email, $hashedPwd, $fname, $type);
+            $stmt->fetch();
 
-      $_SESSION['username'] = $username;
-      $_SESSION['type'] = $obj->type;
-      $_SESSION['id'] = $obj->id;
-      $_SESSION['fname'] = $obj->fname;
-      header("location:index.php");
-    } else {
-
-        if($flag === 'true'){
-          redirect();
-          $flag = 'false';
+            $_SESSION['username'] = $email;
+            $_SESSION['type'] = $type;
+            $_SESSION['id'] = $id;
+            $_SESSION['fname'] = $fname;
+            header("location:index.php");
+        } else {
+            if ($flag === 'true') {
+                redirect();
+                $flag = 'false';
+            }
         }
+    } else {
+        die("Database query error: " . $stmt->error);
     }
-  }
+
+    $stmt->close();
 }
 
 function redirect() {
-  echo '<h1>Invalid Login! Redirecting...</h1>';
-  header("Refresh: 3; url=index.php");
+    echo '<h1>Invalid Login! Redirecting...</h1>';
+    header("Refresh: 3; url=index.php");
 }
-
 
 ?>

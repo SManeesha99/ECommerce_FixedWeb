@@ -1,8 +1,8 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
+// Start or resume the session
+if(session_id() == '' || !isset($_SESSION)){
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,9 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
     <title>BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-  </head>
+     <!-- Content Security Policy (CSP) Header -->
+     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:">
+</head>
   <body>
 
     <nav class="top-bar" data-topbar role="navigation">

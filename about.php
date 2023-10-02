@@ -1,21 +1,26 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();} for php 5.4 and above
-
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
-
+// Start or resume the session
+if(session_id() == '' || !isset($_SESSION)){
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-  </head>
+
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY"> <!-- or use SAMEORIGIN if required -->
+
+</head>
   <body>
 
     <nav class="top-bar" data-topbar role="navigation">
@@ -50,32 +55,22 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
     </nav>
 
 
-
-
     <div class="row" style="margin-top:30px;">
-      <div class="small-12">
-        <p>BOLT Sports Shop is a project on E-Commerce Website. All products listed are fake. This project just gives a preview to what a real world implementation of E-Commerce Website will look like. Well if you do like the website then visit
-        <a href="http://www.techbarrack.com" target="_blank" rel="noopener noreferrer" title="Tech Barrack Solutions">Tech Barrack Solutions</a>.</p>
+<div class="small-12">
+    <p>BOLT Sports Shop is a project on E-Commerce Website. All products listed are fake. This project just gives a preview of what a real-world implementation of an E-Commerce Website will look like. If you like the website, you can visit <a href="http://www.techbarrack.com" target="_blank" rel="noopener noreferrer" title="Tech Barrack Solutions">Tech Barrack Solutions</a>.</p>
 
-        <p>Why BOLT? I am a big fan of Usain Bolt. He is diligent and tries to surpass his previous achievements. And lastly, it was an instant thought. So went for it.</p>
+    <p>Why BOLT? I am a big fan of Usain Bolt. He is diligent and tries to surpass his previous achievements. And lastly, it was an instant thought. So went for it.</p>
 
-        <footer>
-           <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
-        </footer>
+    <footer>
+        <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
+    </footer>
+</div>
+</div>
 
-      </div>
-    </div>
-
-
-
-
-
-
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+  $(document).foundation();
+</script>
+</body>
 </html>

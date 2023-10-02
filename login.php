@@ -1,13 +1,41 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
-if(isset($_SESSION["username"])){
-
-        header("location:index.php");
+if (session_id() == '' || !isset($_SESSION)) {
+    session_start();
 }
 
+if (isset($_SESSION["username"])) {
+    header("location:index.php");
+}
+
+// Generate a CSRF token and store it in the session.
+$csrfToken = bin2hex(random_bytes(32)); // Generate a random token
+$_SESSION['csrf_token'] = $csrfToken;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify the CSRF token before processing the form submission.
+    if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+        // CSRF token is valid; process the login form.
+        $username = $_POST["username"];
+        $password = $_POST["pwd"];
+        $flag = 'true';
+
+        // Your database query and user authentication logic here.
+
+        if ($authenticated) {
+            // User is authenticated; redirect to the desired page.
+            $_SESSION['username'] = $username;
+            header("location:index.php");
+        } else {
+            // Authentication failed.
+            echo '<h1>Invalid Login! Redirecting...</h1>';
+            header("Refresh: 3; url=index.php");
+        }
+    } else {
+        // CSRF token is invalid; reject the request.
+        echo 'CSRF Token Validation Failed.';
+        // You may want to log this event for security monitoring.
+    }
+}
 ?>
 
 <!doctype html>
@@ -18,7 +46,10 @@ if(isset($_SESSION["username"])){
     <title>Login || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-  </head>
+    <!-- Content Security Policy (CSP) Header -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+
+</head>
   <body>
 
     <nav class="top-bar" data-topbar role="navigation">
@@ -57,6 +88,7 @@ if(isset($_SESSION["username"])){
 
 
     <form method="POST" action="verify.php" style="margin-top:30px;">
+    <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
       <div class="row">
         <div class="small-8">
 
@@ -82,8 +114,8 @@ if(isset($_SESSION["username"])){
 
             </div>
             <div class="small-8 columns">
-              <input type="submit" id="right-label" value="Login" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
-              <input type="reset" id="right-label" value="Reset" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
+                <input type="submit" id="right-label" value="Login" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
+                <input type="reset" id="right-label" value="Reset" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
             </div>
           </div>
         </div>
