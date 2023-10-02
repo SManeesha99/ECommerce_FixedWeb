@@ -1,11 +1,14 @@
 <?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
-if(!isset($_SESSION["username"])){
-  header("location:index.php");
+// Start the session if it's not already started
+if(session_id() == '' || !isset($_SESSION)) {
+    session_start();
 }
+
+// Redirect users who are not logged in
+if(!isset($_SESSION["username"])) {
+    header("location:index.php");
+}
+
 include 'config.php';
 ?>
 
@@ -51,41 +54,32 @@ include 'config.php';
       </section>
     </nav>
 
-
-
-
     <div class="row" style="margin-top:10px;">
       <div class="large-12">
         <h3>My COD Orders</h3>
         <hr>
 
         <?php
-          $user = $_SESSION["username"];
-          $result = $mysqli->query("SELECT * from orders where email='".$user."'");
-          if($result) {
+        $user = $_SESSION["username"];
+        $result = $mysqli->query("SELECT * from orders where email='".$user."'");
+        if($result) {
             while($obj = $result->fetch_object()) {
-              //echo '<div class="large-6">';
-              echo '<p><h4>Order ID ->'.$obj->id.'</h4></p>';
-              echo '<p><strong>Date of Purchase</strong>: '.$obj->date.'</p>';
-              echo '<p><strong>Product Code</strong>: '.$obj->product_code.'</p>';
-              echo '<p><strong>Product Name</strong>: '.$obj->product_name.'</p>';
-              echo '<p><strong>Price Per Unit</strong>: '.$obj->price.'</p>';
-              echo '<p><strong>Units Bought</strong>: '.$obj->units.'</p>';
-              echo '<p><strong>Total Cost</strong>: '.$currency.$obj->total.'</p>';
-              //echo '</div>';
-              //echo '<div class="large-6">';
-              //echo '<img src="images/products/sports_band.jpg">';
-              //echo '</div>';
-              echo '<p><hr></p>';
-
+                echo '<p><h4>Order ID ->'.$obj->id.'</h4></p>';
+                echo '<p><strong>Date of Purchase</strong>: '.$obj->date.'</p>';
+                echo '<p><strong>Product Code</strong>: '.$obj->product_code.'</p>';
+                echo '<p><strong>Product Name</strong>: '.$obj->product_name.'</p>';
+                echo '<p><strong>Price Per Unit</strong>: '.$obj->price.'</p>';
+                echo '<p><strong>Units Bought</strong>: '.$obj->units.'</p>';
+                echo '<p><strong>Total Cost</strong>: '.$currency.$obj->total.'</p>';
+                echo '<p><hr></p>';
             }
-          }
+        } else {
+            // Handle errors gracefully and provide a user-friendly message
+            echo '<p><strong>Error:</strong> Unable to retrieve your orders at the moment. Please try again later.</p>';
+        }
         ?>
       </div>
     </div>
-
-
-
 
     <div class="row" style="margin-top:10px;">
       <div class="small-12">

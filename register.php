@@ -1,11 +1,17 @@
 <?php
+// Check if the user is already logged in and redirect if necessary
+if (isset($_SESSION["username"])) {
+    header("location:index.php");
+}
 
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
+// Initialize the session if it's not already
+if (session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
 
-if (isset($_SESSION["username"])) {header ("location:index.php");}
-
-
+// Generate a CSRF token and store it in the session
+$csrfToken = bin2hex(random_bytes(32)); // Generate a random token
+$_SESSION['csrf_token'] = $csrfToken;
 ?>
 
 <!doctype html>
@@ -55,6 +61,7 @@ if (isset($_SESSION["username"])) {header ("location:index.php");}
 
 
     <form method="POST" action="insert.php" style="margin-top:30px;">
+    <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
       <div class="row">
         <div class="small-8">
 
@@ -119,8 +126,8 @@ if (isset($_SESSION["username"])) {header ("location:index.php");}
 
             </div>
             <div class="small-8 columns">
-              <input type="submit" id="right-label" value="Register" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
-              <input type="reset" id="right-label" value="Reset" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
+                <input type="submit" id="right-label" value="Register" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
+                <input type="reset" id="right-label" value="Reset" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
             </div>
           </div>
         </div>
