@@ -3,6 +3,9 @@
 if(session_id() == '' || !isset($_SESSION)){
     session_start();
 }
+
+// Include database connection configuration
+include 'config.php';
 ?>
 
 <!DOCTYPE html>
@@ -53,9 +56,6 @@ if(session_id() == '' || !isset($_SESSION)){
       </section>
     </nav>
 
-
-
-
     <div class="row" style="margin-top:10px;">
       <div class="small-12">
         <?php
@@ -97,7 +97,7 @@ if(session_id() == '' || !isset($_SESSION)){
 
           echo '</div>';
           echo '</div>';
-          ?>
+        ?>
 
         <div class="row" style="margin-top:10px;">
           <div class="small-12">
@@ -106,7 +106,7 @@ if(session_id() == '' || !isset($_SESSION)){
             </footer>
           </div>
         </div>
-    </div>
+      </div>
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
