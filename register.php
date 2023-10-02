@@ -14,16 +14,18 @@ $csrfToken = bin2hex(random_bytes(32)); // Generate a random token
 $_SESSION['csrf_token'] = $csrfToken;
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/vendor/modernizr.js"></script>
-  </head>
-  <body>
+    <!-- X-Frame-Options Header -->
+    <meta http-equiv="X-Frame-Options" content="DENY"> <!-- or use SAMEORIGIN if required -->
+</head>
+<body>
 
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
@@ -137,21 +139,15 @@ $_SESSION['csrf_token'] = $csrfToken;
 
     <div class="row" style="margin-top:10px;">
       <div class="small-12">
+        
+      <footer>
+    <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
+</footer>
 
-        <footer>
-           <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
-        </footer>
-
-      </div>
-    </div>
-
-
-
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
 </html>
