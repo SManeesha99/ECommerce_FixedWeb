@@ -5,6 +5,7 @@ if (session_id() == '' || !isset($_SESSION)) {
 
 include 'config.php';
 
+// Validate and sanitize user inputs
 $product_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
@@ -13,6 +14,14 @@ if ($product_id === false || $action === null) {
     // Handle invalid input gracefully, e.g., redirect to an error page
     header("location:error.php");
     exit; // Terminate the script
+}
+
+// Check for valid action values to prevent unknown actions
+$validActions = ["add", "remove"];
+if (!in_array($action, $validActions)) {
+    // Handle unknown action gracefully, e.g., redirect to an error page
+    header("location:error.php");
+    exit;
 }
 
 $result = $mysqli->query("SELECT qty FROM products WHERE id = " . $product_id);
@@ -36,11 +45,6 @@ if ($result) {
                     unset($_SESSION['cart'][$product_id]);
                 }
                 break;
-
-            default:
-                // Handle unknown action gracefully, e.g., redirect to an error page
-                header("location:error.php");
-                exit;
         }
     }
 }

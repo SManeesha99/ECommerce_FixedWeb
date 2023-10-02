@@ -9,6 +9,7 @@ $pin = filter_input(INPUT_POST, 'pin', FILTER_VALIDATE_INT);
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 $pwd = $_POST["pwd"];
 
+// Check if any input is invalid or empty
 if (
     empty($fname) || empty($lname) || empty($address) ||
     empty($city) || $pin === false || $email === false
