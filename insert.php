@@ -14,7 +14,7 @@ if (
     empty($fname) || empty($lname) || empty($address) ||
     empty($city) || $pin === false || $email === false
 ) {
-    // Handle invalid input data gracefully, e.g., redirect to an error page
+    // Handle invalid input data gracefully, 
     header("location:error.php");
     exit;
 }

@@ -63,6 +63,7 @@ include 'config.php';
         $user = $_SESSION["username"];
         $result = $mysqli->query("SELECT * from orders where email='".$user."'");
         if($result) {
+          // Display orders if the query was successful
             while($obj = $result->fetch_object()) {
                 echo '<p><h4>Order ID ->'.$obj->id.'</h4></p>';
                 echo '<p><strong>Date of Purchase</strong>: '.$obj->date.'</p>';

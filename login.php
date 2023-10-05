@@ -92,8 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     <form method="POST" action="verify.php" style="margin-top:30px;">
+
+    <!-- add CSRF token to the form as a hidden field -->
     <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
-      <div class="row">
+      
+    <div class="row">
         <div class="small-8">
 
           <div class="row">
