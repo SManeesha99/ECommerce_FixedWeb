@@ -1,35 +1,26 @@
+<?php
+// Check if the user is already logged in and redirect if necessary
+if (isset($_SESSION["username"])) {
+    header("location:index.php");
+}
+
+// Initialize the session if it's not already
+if (session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
+
+// Generate a CSRF token and store it in the session
+$csrfToken = bin2hex(random_bytes(32)); // Generate a random token
+$_SESSION['csrf_token'] = $csrfToken;
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register || MULD Online Shop</title>
+    <title>Register || BOLT Sports Shop</title>
     <link rel="stylesheet" href="css/foundation.css" />
-    <style>
-
-        #registration-container {
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-
-        .registration-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .registration-form label {
-            font-weight: bold;
-        }
-
-        .registration-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-    </style>
     <script src="js/vendor/modernizr.js"></script>
     <!-- X-Frame-Options Header -->
     <meta http-equiv="X-Frame-Options" content="DENY"> <!-- or use SAMEORIGIN if required -->
@@ -39,7 +30,7 @@
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
-          <h1><a href="index.php">MULD Online Shop</a></h1>
+          <h1><a href="index.php">BOLT Sports Shop</a></h1>
         </li>
         <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
       </ul>
@@ -67,23 +58,21 @@
       </section>
     </nav>
 
-    <div id="registration-container" class="row">
-        <div class="small-12 small-centered columns">
-            <div class="registration-header">
-                <h2>Register for MULD Online Shop</h2>
-            </div>
 
-            <form method="POST" action="insert.php" style="margin-top:30px;">
+
+
+
+    <form method="POST" action="insert.php" style="margin-top:30px;">
     <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
       <div class="row">
-        <div class="small-9">
+        <div class="small-8">
 
           <div class="row">
             <div class="small-4 columns">
               <label for="right-label" class="right inline">First Name</label>
             </div>
             <div class="small-8 columns">
-              <input type="text" id="right-label" placeholder="Enter First Name" name="fname">
+              <input type="text" id="right-label" placeholder="Nayan" name="fname">
             </div>
           </div>
           <div class="row">
@@ -91,7 +80,7 @@
               <label for="right-label" class="right inline">Last Name</label>
             </div>
             <div class="small-8 columns">
-              <input type="text" id="right-label" placeholder="Enter Last Name" name="lname">
+              <input type="text" id="right-label" placeholder="Seth" name="lname">
             </div>
           </div>
           <div class="row">
@@ -99,7 +88,7 @@
               <label for="right-label" class="right inline">Address</label>
             </div>
             <div class="small-8 columns">
-              <input type="text" id="right-label" placeholder="Enter Address" name="address">
+              <input type="text" id="right-label" placeholder="Infinite Loop" name="address">
             </div>
           </div>
           <div class="row">
@@ -107,7 +96,7 @@
               <label for="right-label" class="right inline">City</label>
             </div>
             <div class="small-8 columns">
-              <input type="text" id="right-label" placeholder="Enter City" name="city">
+              <input type="text" id="right-label" placeholder="Mumbai" name="city">
             </div>
           </div>
           <div class="row">
@@ -115,7 +104,7 @@
               <label for="right-label" class="right inline">Pin Code</label>
             </div>
             <div class="small-8 columns">
-              <input type="number" id="right-label" placeholder="Enter PinCode" name="pin">
+              <input type="number" id="right-label" placeholder="400056" name="pin">
             </div>
           </div>
           <div class="row">
@@ -123,7 +112,7 @@
               <label for="right-label" class="right inline">E-Mail</label>
             </div>
             <div class="small-8 columns">
-              <input type="email" id="right-label" placeholder="example@gmail.com" name="email">
+              <input type="email" id="right-label" placeholder="nayantronix@gmail.com" name="email">
             </div>
           </div>
           <div class="row">
@@ -131,7 +120,7 @@
               <label for="right-label" class="right inline">Password</label>
             </div>
             <div class="small-8 columns">
-              <input type="password" id="right-label" placeholder="Enter Password" name="pwd">
+              <input type="password" id="right-label" name="pwd">
             </div>
           </div>
           <div class="row">
@@ -140,28 +129,25 @@
             </div>
             <div class="small-8 columns">
                 <input type="submit" id="right-label" value="Register" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
-                <input type="reset" id="right-label" value="Reset" style="background: #FF0000; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
+                <input type="reset" id="right-label" value="Reset" style="background: #0078A0; border: none; color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 1em; padding: 10px;">
             </div>
           </div>
         </div>
       </div>
     </form>
 
-        </div>
-    </div>
 
-    <div class="row" style="margin-top:20px;">
-        <div class="small-12">
-            <footer>
-                <p style="text-align:center; font-size:0.8em;">&copy; MULD Online Shop || #2023.</p>
-            </footer>
-        </div>
-    </div>
+    <div class="row" style="margin-top:10px;">
+      <div class="small-12">
+        
+      <footer>
+    <p style="text-align:center; font-size:0.8em;">&copy; BOLT Sports Shop. All Rights Reserved.</p>
+</footer>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/foundation.min.js"></script>
-    <script>
-        $(document).foundation();
-    </script>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
 </body>
 </html>
